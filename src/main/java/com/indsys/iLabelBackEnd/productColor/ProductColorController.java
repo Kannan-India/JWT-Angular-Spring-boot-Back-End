@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -21,6 +22,7 @@ public class ProductColorController {
 
     @PostMapping("add")
     public boolean addProductColor(@RequestBody ProductColor productColor){
+        productColor.setCreatedDateTime(new Date());
         productColorRepository.insert(productColor);
         return true;
     }
