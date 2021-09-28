@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AuthenticationRequest {
 
-    @JsonProperty("_email")
+//    @JsonProperty("_email")
     private String email;
 
-    @JsonProperty("_password")
+//    @JsonProperty("_password")
     private String password;
 
     public String getEmail() {

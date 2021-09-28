@@ -2,7 +2,9 @@ package com.indsys.iLabelBackEnd.authentication.controller;
 
 import com.indsys.iLabelBackEnd.authentication.model.AuthenticationRequest;
 import com.indsys.iLabelBackEnd.authentication.model.AuthenticationResponse;
+import com.indsys.iLabelBackEnd.authentication.model.DateExample;
 import com.indsys.iLabelBackEnd.authentication.model.UserProfile;
+import com.indsys.iLabelBackEnd.authentication.repository.DateExampleRepository;
 import com.indsys.iLabelBackEnd.authentication.repository.UserProfileRepository;
 import com.indsys.iLabelBackEnd.authentication.service.JwtUtils;
 import com.indsys.iLabelBackEnd.authentication.service.UserService;
@@ -13,6 +15,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -30,6 +36,9 @@ public class AuthenticationController {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Autowired
+    private DateExampleRepository dateExampleRepository;
 
     @PostMapping("/api/register")
     private ResponseEntity registerUser(
@@ -72,10 +81,13 @@ public class AuthenticationController {
 
         String generatedToken = jwtUtils.generateToken(userDetails);
 
-        return ResponseEntity.ok(new AuthenticationResponse("Successful authentication for user : " +
-                        "" + authenticationRequest.getEmail() + " " + generatedToken
-                )
+        return ResponseEntity.ok(new AuthenticationResponse(generatedToken)
         );
+    }
+
+    @GetMapping("/api/validity")
+    private boolean checkValidity(){
+        return true;
     }
 
     @GetMapping("/api/authExample")
@@ -88,4 +100,26 @@ public class AuthenticationController {
         return ResponseEntity.ok(new AuthenticationResponse("That's how i behave without security"));
     }
 
+    @GetMapping("/api/user-profile")
+    private ResponseEntity<List<UserProfile>> getUsers(){
+        List<UserProfile> userProfiles = userProfileRepository.findAll();
+        return ResponseEntity.ok(userProfiles);
+    }
+//
+//    @PostMapping("/api/dateExample")
+//    private void dateExamplePost(){
+//
+//    }
+
+    @PostMapping("/api/dateExample")
+    private DateExample dateExample(@RequestBody DateExample dateExample){
+        dateExample.setDate(new Date());
+
+        return dateExampleRepository.insert(dateExample);
+//        Date date1 = formatter.format(new Date());
+        //return date in the following format
+        //Sat Sep 25 11:24:56 IST 2021
+//        System.out.println(date1);
+
+    }
 }

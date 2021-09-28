@@ -4,6 +4,7 @@ import com.indsys.iLabelBackEnd.authentication.service.JwtRequestFilter;
 import com.indsys.iLabelBackEnd.authentication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
 
-        web.ignoring().antMatchers("/api/register", "/api/auth", "/api/nosecurity");
+        web.ignoring().antMatchers("/api/register", "/api/auth", "/api/nosecurity", "/api/dateExample", "/api/validity", "/api/product-color/add", "/api/add");
 
     }
 
@@ -59,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        http.csrf().disable().authorizeRequests().antMatchers("/api/register", "/api/auth")
 //        .permitAll().anyRequest().authenticated();
-        http.addFilterBefore(
+        http.cors().and().addFilterBefore(
                 jwtRequestFilter,
                 UsernamePasswordAuthenticationFilter.class
         )
