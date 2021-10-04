@@ -65,6 +65,7 @@ public class AuthenticationController {
     ){
 
         try{
+
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             authenticationRequest.getEmail(), authenticationRequest.getPassword()
@@ -72,7 +73,7 @@ public class AuthenticationController {
             );
         }catch (Exception e){
             return ResponseEntity.ok(new AuthenticationResponse("Can't authenticate the user : " +
-                    "" + authenticationRequest.getEmail()
+                    "" + authenticationRequest.getEmail() + e
                     )
             );
         }

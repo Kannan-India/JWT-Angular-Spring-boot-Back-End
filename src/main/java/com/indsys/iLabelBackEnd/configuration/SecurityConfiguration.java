@@ -40,7 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
 
-        web.ignoring().antMatchers("/api/register", "/api/auth", "/api/nosecurity", "/api/dateExample", "/api/validity", "/api/product-color/add", "/api/add");
+        web.ignoring().antMatchers("/api/register", "/api/auth", "/api/nosecurity", "/api/dateExample", "/api/validity", "/api/product-color/add", "/api/add","/api/trimtype/add","/api/trimtype/list", "/api/label-type/add", "/api/label-type/list");
 
     }
 
